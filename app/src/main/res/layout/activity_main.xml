@@ -90,7 +90,7 @@
                 android:background="@color/black"
                 android:textStyle="bold"
                 android:textSize="20sp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="10dp"
                 android:text="C" />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -101,7 +101,7 @@
                 android:background="@color/black"
                 android:textStyle="bold"
                 android:textSize="20sp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="10dp"
                 android:text="7" />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -112,7 +112,7 @@
                 android:background="@color/black"
                 android:textStyle="bold"
                 android:textSize="20sp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="10dp"
                 android:text="4" />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -123,7 +123,7 @@
                 android:background="@color/black"
                 android:textStyle="bold"
                 android:textSize="20sp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="10dp"
                 android:text="1" />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -134,7 +134,7 @@
                 android:background="@color/black"
                 android:textStyle="bold"
                 android:textSize="20sp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="10dp"
                 android:text="0" />
         </LinearLayout>
 
@@ -151,7 +151,7 @@
                 android:textColor="@color/btn"
                 android:background="@color/black"
                 android:textSize="20sp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="10dp"
                 android:text=">" />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -162,7 +162,7 @@
                 android:background="@color/black"
                 android:textStyle="bold"
                 android:textSize="20sp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="10dp"
                 android:text="8" />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -173,7 +173,7 @@
                 android:background="@color/black"
                 android:textStyle="bold"
                 android:textSize="20sp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="10dp"
                 android:text="5" />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -184,7 +184,7 @@
                 android:background="@color/black"
                 android:textStyle="bold"
                 android:textSize="20sp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="10dp"
                 android:text="2" />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -195,7 +195,7 @@
                 android:background="@color/black"
                 android:textStyle="bold"
                 android:textSize="20sp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="10dp"
                 android:text="00" />
         </LinearLayout>
 
@@ -213,7 +213,7 @@
                 android:background="@color/black"
                 android:textStyle="bold"
                 android:textSize="20sp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="10dp"
                 android:text="%" />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -224,7 +224,7 @@
                 android:background="@color/black"
                 android:textStyle="bold"
                 android:textSize="20sp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="10dp"
                 android:text="9" />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -235,7 +235,7 @@
                 android:background="@color/black"
                 android:textStyle="bold"
                 android:textSize="20sp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="10dp"
                 android:text="6" />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -246,7 +246,7 @@
                 android:background="@color/black"
                 android:textStyle="bold"
                 android:textSize="20sp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="10dp"
                 android:text="3" />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -257,7 +257,7 @@
                 android:background="@color/black"
                 android:textStyle="bold"
                 android:textSize="20sp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="10dp"
                 android:text="." />
         </LinearLayout>
 
@@ -275,7 +275,7 @@
                 android:background="@color/black"
                 android:textStyle="bold"
                 android:textSize="20sp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="10dp"
                 android:text="/" />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -286,7 +286,7 @@
                 android:background="@color/black"
                 android:textStyle="bold"
                 android:textSize="20sp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="10dp"
                 android:text="x" />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -297,7 +297,7 @@
                 android:background="@color/black"
                 android:textStyle="bold"
                 android:textSize="20sp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="10dp"
                 android:text="+" />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -308,7 +308,7 @@
                 android:background="@color/black"
                 android:textStyle="bold"
                 android:textSize="20sp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="10dp"
                 android:text="-" />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -319,7 +319,7 @@
                 android:background="@color/black"
                 android:textStyle="bold"
                 android:textSize="20sp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="10dp"
                 android:text="=" />
         </LinearLayout>
     </LinearLayout>
