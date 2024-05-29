@@ -6,8 +6,6 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import javax.script.ScriptEngine
 import javax.script.ScriptEngineManager
 
@@ -15,10 +13,10 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var expression: TextView
     private lateinit var result: TextView
-    private lateinit var clear : Button
+    private lateinit var clear: Button
     private lateinit var backSpace: Button
     private lateinit var percent: Button
-    private lateinit var devide: Button
+    private lateinit var divide: Button
     private lateinit var multiply: Button
     private lateinit var add: Button
     private lateinit var subtract: Button
@@ -36,18 +34,26 @@ class MainActivity : AppCompatActivity() {
     private lateinit var eight: Button
     private lateinit var nine: Button
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+        initializeViews()
 
+        expression.movementMethod = ScrollingMovementMethod()
+        expression.isActivated = true
+        expression.isPressed = true
+
+        setupListeners()
+    }
+
+    private fun initializeViews() {
         expression = findViewById(R.id.expression)
         result = findViewById(R.id.result)
         clear = findViewById(R.id.clear)
         backSpace = findViewById(R.id.backSpace)
         percent = findViewById(R.id.percent)
-        devide = findViewById(R.id.divide)
+        divide = findViewById(R.id.divide)
         multiply = findViewById(R.id.multiply)
         add = findViewById(R.id.add)
         subtract = findViewById(R.id.subtract)
@@ -64,218 +70,128 @@ class MainActivity : AppCompatActivity() {
         seven = findViewById(R.id.seven)
         eight = findViewById(R.id.eight)
         nine = findViewById(R.id.nine)
+    }
 
-        expression.movementMethod = ScrollingMovementMethod()
-        expression.isActivated = true
-        expression.isPressed = true
-
-        var str: String
-
+    private fun setupListeners() {
         clear.setOnClickListener {
-            expressionText("0")
-            expression.textSize = 60F
-            result.textSize = 30F
+            clearExpression()
         }
+
         backSpace.setOnClickListener {
-            if (expression.text.toString().isNotEmpty()){
-                val lastIndex = expression.text.toString().lastIndex
-                str = expression.text.toString().substring(0,lastIndex)
-                expressionText(str)
-                resultText()
+            handleBackspace()
+        }
+
+        setupOperatorListeners()
+        setupNumberListeners()
+    }
+
+    private fun clearExpression() {
+        updateExpressionText("0")
+        expression.textSize = 60F
+        result.textSize = 30F
+    }
+
+    private fun handleBackspace() {
+        val currentText = expression.text.toString()
+        if (currentText.isNotEmpty()) {
+            val newText = currentText.substring(0, currentText.length - 1)
+            updateExpressionText(newText)
+            evaluateExpression()
+        }
+    }
+
+    private fun setupOperatorListeners() {
+        val operators = mapOf(
+            percent to "%",
+            divide to "/",
+            multiply to "*",
+            add to "+",
+            subtract to "-"
+        )
+
+        for ((button, operator) in operators) {
+            button.setOnClickListener {
+                appendOperator(operator)
             }
         }
-        percent.setOnClickListener {
-            if (expression.text.toString().endsWith("%")|| expression.text.toString().endsWith("/")|| expression.text.toString().endsWith("*")|| expression.text.toString().endsWith("+")|| expression.text.toString().endsWith("-")|| expression.text.toString().endsWith(".")){
-                str = expression.text.toString()
-                expressionText(str)
-            }else{
-                str = expression.text.toString() + "%"
-                expressionText(str)
-            }
-        }
-        devide.setOnClickListener {
-            if (expression.text.toString().endsWith("%")|| expression.text.toString().endsWith("/")|| expression.text.toString().endsWith("*")|| expression.text.toString().endsWith("+")|| expression.text.toString().endsWith("-")|| expression.text.toString().endsWith(".")){
-                str = expression.text.toString()
-                expressionText(str)
-            }else{
-                str = expression.text.toString() + "/"
-                expressionText(str)
-            }
-        }
-        multiply.setOnClickListener {
-            if (expression.text.toString().endsWith("%")|| expression.text.toString().endsWith("/")|| expression.text.toString().endsWith("*")|| expression.text.toString().endsWith("+")|| expression.text.toString().endsWith("-")|| expression.text.toString().endsWith(".")){
-                str = expression.text.toString()
-                expressionText(str)
-            }else{
-                str = expression.text.toString() + "*"
-                expressionText(str)
-            }
-        }
-        add.setOnClickListener {
-            if (expression.text.toString().endsWith("%")|| expression.text.toString().endsWith("/")|| expression.text.toString().endsWith("*")|| expression.text.toString().endsWith("+")|| expression.text.toString().endsWith("-")|| expression.text.toString().endsWith(".")){
-                str = expression.text.toString()
-                expressionText(str)
-            }else{
-                str = expression.text.toString() + "+"
-                expressionText(str)
-            }
-        }
-        subtract.setOnClickListener {
-            if (expression.text.toString().endsWith("%")|| expression.text.toString().endsWith("/")|| expression.text.toString().endsWith("*")|| expression.text.toString().endsWith("+")|| expression.text.toString().endsWith("-")|| expression.text.toString().endsWith(".")){
-                str = expression.text.toString()
-                expressionText(str)
-            }else{
-                str = expression.text.toString() + "-"
-                expressionText(str)
-            }
-        }
+
         equal.setOnClickListener {
             expression.textSize = 30F
             result.textSize = 60F
         }
+
         dot.setOnClickListener {
-            if (expression.text.toString().endsWith("%")|| expression.text.toString().endsWith("/")|| expression.text.toString().endsWith("*")|| expression.text.toString().endsWith("+")|| expression.text.toString().endsWith("-")|| expression.text.toString().endsWith(".")){
-                str = expression.text.toString()
-                expressionText(str)
-            }else{
-                str = expression.text.toString() + "."
-                expressionText(str)
-            }
+            appendOperator(".")
         }
-        zero.setOnClickListener {
-            if (expression.text.toString().startsWith("0")){
-                str  =expression.text.toString().replace("0", "") +"0"
-                expressionText(str)
-                resultText()
-            }else{
-                str = expression.text.toString() +"0"
-                expressionText(str)
-                resultText()
-            }
-        }
-        doubleZero.setOnClickListener {
-            if (expression.text.toString().startsWith("0")){
-                str  =expression.text.toString().replace("0", "") +"00"
-                expressionText(str)
-                resultText()
-            }else{
-                str = expression.text.toString() +"00"
-                expressionText(str)
-                resultText()
-            }
-        }
-        one.setOnClickListener {
-            if (expression.text.toString().startsWith("0")){
-                str  =expression.text.toString().replace("0", "") +"1"
-                expressionText(str)
-                resultText()
-            }else{
-                str = expression.text.toString() +"1"
-                expressionText(str)
-                resultText()
-            }
-        }
-        two.setOnClickListener {
-            if (expression.text.toString().startsWith("0")){
-                str  =expression.text.toString().replace("0", "") +"2"
-                expressionText(str)
-                resultText()
-            }else{
-                str = expression.text.toString() +"2"
-                expressionText(str)
-                resultText()
-            }
-        }
-        three.setOnClickListener {
-            if (expression.text.toString().startsWith("0")){
-                str  =expression.text.toString().replace("0", "") +"3"
-                expressionText(str)
-                resultText()
-            }else{
-                str = expression.text.toString() +"3"
-                expressionText(str)
-                resultText()
-            }
-        }
-        four.setOnClickListener {
-            if (expression.text.toString().startsWith("0")){
-                str  =expression.text.toString().replace("0", "") +"4"
-                expressionText(str)
-                resultText()
-            }else{
-                str = expression.text.toString() +"4"
-                expressionText(str)
-                resultText()
-            }
-        }
-        five.setOnClickListener {
-            if (expression.text.toString().startsWith("0")){
-                str  =expression.text.toString().replace("0", "") +"5"
-                expressionText(str)
-                resultText()
-            }else{
-                str = expression.text.toString() +"5"
-                expressionText(str)
-                resultText()
-            }
-        }
-        six.setOnClickListener {
-            if (expression.text.toString().startsWith("0")){
-                str  =expression.text.toString().replace("0", "") +"6"
-                expressionText(str)
-                resultText()
-            }else{
-                str = expression.text.toString() +"6"
-                expressionText(str)
-                resultText()
-            }
-        }
-        seven.setOnClickListener {
-            if (expression.text.toString().startsWith("0")){
-                str  =expression.text.toString().replace("0", "") +"7"
-                expressionText(str)
-                resultText()
-            }else{
-                str = expression.text.toString() +"7"
-                expressionText(str)
-                resultText()
-            }
-        }
-        eight.setOnClickListener {
-            if (expression.text.toString().startsWith("0")){
-                str  =expression.text.toString().replace("0", "") +"8"
-                expressionText(str)
-                resultText()
-            }else{
-                str = expression.text.toString() +"8"
-                expressionText(str)
-                resultText()
-            }
-        }
-        nine.setOnClickListener {
-
-        }
-
     }
 
-
-    private fun expressionText(str: String){
-        expression.text = str
+    private fun appendOperator(operator: String) {
+        val currentText = expression.text.toString()
+        if (currentText.isEmpty() || currentText.last().isOperator() || currentText.endsWith(".")) {
+            updateExpressionText(currentText)
+        } else {
+            updateExpressionText(currentText + operator)
+        }
     }
-    private fun resultText() {
+
+    private fun setupNumberListeners() {
+        val numbers = mapOf(
+            zero to "0",
+            doubleZero to "00",
+            one to "1",
+            two to "2",
+            three to "3",
+            four to "4",
+            five to "5",
+            six to "6",
+            seven to "7",
+            eight to "8",
+            nine to "9"
+        )
+
+        for ((button, number) in numbers) {
+            button.setOnClickListener {
+                appendNumber(number)
+            }
+        }
+    }
+
+    private fun appendNumber(number: String) {
+        val currentText = expression.text.toString()
+        val newText = if (currentText == "0") number else currentText + number
+        updateExpressionText(newText)
+        evaluateExpression()
+    }
+
+    private fun updateExpressionText(text: String) {
+        expression.text = text
+    }
+
+    private fun evaluateExpression() {
         val exp = expression.text.toString()
-        val engine:ScriptEngine = ScriptEngineManager().getEngineByName("rhino")
+        val engine: ScriptEngine = ScriptEngineManager().getEngineByName("rhino")
 
         try {
             val res = engine.eval(exp)
-            if (res.toString().endsWith(".0")){
-                result.text = "=" + res.toString().replace(".0", "")
-            }else{
-                result.text = "=$res"
+            val resultText = if (res.toString().endsWith(".0")) {
+                res.toString().replace(".0", "")
+            } else {
+                res.toString()
             }
-        }catch (e:Exception){
-            expression.text  = expression.text.toString()
-            result.text = expression.text.toString()
+            result.text = "=$resultText"
+        } catch (e: Exception) {
+            handleEvaluationError()
         }
     }
+
+    private fun handleEvaluationError() {
+        result.text = "Error"
+    }
+
+    private fun Char.isOperator(): Boolean {
+        return this == '%' || this == '/' || this == '*' || this == '+' || this == '-'
+    }
 }
+
+
+
