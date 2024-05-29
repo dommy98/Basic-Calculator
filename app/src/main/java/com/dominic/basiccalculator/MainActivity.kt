@@ -185,7 +185,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun handleEvaluationError() {
-        result.text = "Error"
+        result.text = getString(R.string.error)
     }
 
     private fun Char.isOperator(): Boolean {
