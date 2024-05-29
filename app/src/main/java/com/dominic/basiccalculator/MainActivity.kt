@@ -8,6 +8,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import javax.script.ScriptEngine
+import javax.script.ScriptEngineManager
 
 class MainActivity : AppCompatActivity() {
 
@@ -152,31 +154,103 @@ class MainActivity : AppCompatActivity() {
             }
         }
         doubleZero.setOnClickListener {
-
+            if (expression.text.toString().startsWith("0")){
+                str  =expression.text.toString().replace("0", "") +"00"
+                expressionText(str)
+                resultText()
+            }else{
+                str = expression.text.toString() +"00"
+                expressionText(str)
+                resultText()
+            }
         }
         one.setOnClickListener {
-
+            if (expression.text.toString().startsWith("0")){
+                str  =expression.text.toString().replace("0", "") +"1"
+                expressionText(str)
+                resultText()
+            }else{
+                str = expression.text.toString() +"1"
+                expressionText(str)
+                resultText()
+            }
         }
         two.setOnClickListener {
-
+            if (expression.text.toString().startsWith("0")){
+                str  =expression.text.toString().replace("0", "") +"2"
+                expressionText(str)
+                resultText()
+            }else{
+                str = expression.text.toString() +"2"
+                expressionText(str)
+                resultText()
+            }
         }
         three.setOnClickListener {
-
+            if (expression.text.toString().startsWith("0")){
+                str  =expression.text.toString().replace("0", "") +"3"
+                expressionText(str)
+                resultText()
+            }else{
+                str = expression.text.toString() +"3"
+                expressionText(str)
+                resultText()
+            }
         }
         four.setOnClickListener {
-
+            if (expression.text.toString().startsWith("0")){
+                str  =expression.text.toString().replace("0", "") +"4"
+                expressionText(str)
+                resultText()
+            }else{
+                str = expression.text.toString() +"4"
+                expressionText(str)
+                resultText()
+            }
         }
         five.setOnClickListener {
-
+            if (expression.text.toString().startsWith("0")){
+                str  =expression.text.toString().replace("0", "") +"5"
+                expressionText(str)
+                resultText()
+            }else{
+                str = expression.text.toString() +"5"
+                expressionText(str)
+                resultText()
+            }
         }
         six.setOnClickListener {
-
+            if (expression.text.toString().startsWith("0")){
+                str  =expression.text.toString().replace("0", "") +"6"
+                expressionText(str)
+                resultText()
+            }else{
+                str = expression.text.toString() +"6"
+                expressionText(str)
+                resultText()
+            }
         }
         seven.setOnClickListener {
-
+            if (expression.text.toString().startsWith("0")){
+                str  =expression.text.toString().replace("0", "") +"7"
+                expressionText(str)
+                resultText()
+            }else{
+                str = expression.text.toString() +"7"
+                expressionText(str)
+                resultText()
+            }
         }
         eight.setOnClickListener {
-
+            if (expression.text.toString().startsWith("0")){
+                str  =expression.text.toString().replace("0", "") +"8"
+                expressionText(str)
+                resultText()
+            }else{
+                str = expression.text.toString() +"8"
+                expressionText(str)
+                resultText()
+            }
         }
         nine.setOnClickListener {
 
@@ -189,6 +263,19 @@ class MainActivity : AppCompatActivity() {
         expression.text = str
     }
     private fun resultText() {
-        TODO("Not yet implemented")
+        val exp = expression.text.toString()
+        val engine:ScriptEngine = ScriptEngineManager().getEngineByName("rhino")
+
+        try {
+            val res = engine.eval(exp)
+            if (res.toString().endsWith(".0")){
+                result.text = "=" + res.toString().replace(".0", "")
+            }else{
+                result.text = "=$res"
+            }
+        }catch (e:Exception){
+            expression.text  = expression.text.toString()
+            result.text = expression.text.toString()
+        }
     }
 }
